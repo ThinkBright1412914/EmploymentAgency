@@ -1,0 +1,116 @@
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Admin/AdminMaster.Master" AutoEventWireup="true" CodeBehind="Dashboard.aspx.cs" Inherits="EmploymentAgency.Admin.Dashboard" %>
+
+<asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" />
+</asp:Content>
+
+<asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
+
+    <style>
+        .card {
+            background-color: #fff;
+            border-radius: 10px;
+            border: none;
+            position: relative;
+            margin-bottom: 30px;
+            box-shadow: 0 0.46875rem 2.1875rem rgba(90, 97, 105, 0.1), 0 0.9375rem 1.40625rem rgba(90, 97, 105, 0.1), 0 0.25rem 0.53125rem rgba(90, 97, 105, 0.12), 0 0.125rem 0.1875rem rgba(90, 97, 105, 0.1);
+        }
+
+        .l-bg-cherry {
+            background: linear-gradient(to right, #493240, #f09) !important;
+            color: #fff;
+        }
+
+        .card.card-statistic-3 .card-icon-large .fas {
+            font-size: 110px;
+        }
+
+        .card.card-statistic-3 .card-icon {
+            text-align: center;
+            line-height: 50px;
+            margin-left: 15px;
+            color: #000;
+            position: absolute;
+            right: -5px;
+            top: 20px;
+            opacity: 0.1;
+        }
+    </style>
+
+    <div class="container pt-4">
+        <div class="row">
+            <div class="col-12 pb-3">
+                <h2 class="text-center">Dashboard</h2>
+            </div>
+
+            <!-- Total Users -->
+            <div class="col-xl-3 col-lg-6 mb-4">
+                <div class="card l-bg-cherry">
+                    <div class="card-statistic-3 p-4">
+                        <div class="card-icon card-icon-large">
+                            <i class="fas fa-users pr-2"></i>
+                        </div>
+                        <div class="mb-4">
+                            <h5 class="card-title mb-0">Total Users</h5>
+                        </div>
+                        <div class="d-flex align-items-center">
+                            <h2 class="mb-0"><%Response.Write(Session["Users"]); %></h2>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Total Jobs -->
+            <div class="col-xl-3 col-lg-6 mb-4">
+                <div class="card l-bg-blue-dark">
+                    <div class="card-statistic-3 p-4">
+                        <div class="card-icon card-icon-large">
+                            <i class="fas fa-briefcase pr-2"></i>
+                        </div>
+                        <div class="mb-4">
+                            <h5 class="card-title mb-0">Total Jobs</h5>
+                        </div>
+                        <div class="d-flex align-items-center">
+                            <h2 class="mb-0"><%Response.Write(Session["Jobs"]); %></h2>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Applied Jobs -->
+            <div class="col-xl-3 col-lg-6 mb-4">
+                <div class="card l-bg-cherry">
+                    <div class="card-statistic-3 p-4">
+                        <div class="card-icon card-icon-large">
+                            <i class="fas fa-check-square pr-2"></i>
+                        </div>
+                        <div class="mb-4">
+                            <h5 class="card-title mb-0">Applied Jobs</h5>
+                        </div>
+                        <div class="d-flex align-items-center">
+                            <h2 class="mb-0"><%Response.Write(Session["AppliedJobs"]); %></h2>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Contacted Users -->
+            <div class="col-xl-3 col-lg-6 mb-4">
+                <div class="card l-bg-cherry">
+                    <div class="card-statistic-3 p-4">
+                        <div class="card-icon card-icon-large">
+                            <i class="fas fa-comments pr-2"></i>
+                        </div>
+                        <div class="mb-4">
+                            <h5 class="card-title mb-0">Contacted Users</h5>
+                        </div>
+                        <div class="d-flex align-items-center">
+                            <h2 class="mb-0"><%Response.Write(Session["Contact"]); %></h2>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</asp:Content>

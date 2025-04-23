@@ -1,0 +1,51 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+
+namespace EmploymentAgency.User
+{
+	public partial class UserMaster : System.Web.UI.MasterPage
+	{
+		protected void Page_Load(object sender, EventArgs e)
+		{
+            if(Session["user"] != null)
+            {
+                lbLoginOrLogout.Text = "Logout";
+                lbRegisterOrProfile.Text = "Profile";
+            }
+            else
+            {
+                lbLoginOrLogout.Text = "Login";
+                lbRegisterOrProfile.Text = "Register";
+            }
+        }
+
+        protected void lbRegisterOrProfile_Click(object sender, EventArgs e)
+        {
+            if (lbRegisterOrProfile.Text == "Profile")
+            {
+                Response.Redirect("Profile.aspx");
+            }
+            else
+            {
+                Response.Redirect("Register.aspx");
+            }
+        }
+
+        protected void lbLoginOrLogout_Click(object sender, EventArgs e)
+        {
+            if(lbLoginOrLogout.Text == "Login")
+            {
+                Response.Redirect("Login.aspx");
+            }
+            else
+            {
+                Session.Abandon();
+                Response.Redirect("Login.aspx");
+            }
+        }
+    }
+}
