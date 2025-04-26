@@ -32,13 +32,15 @@ namespace EmploymentAgency.Admin
             string query = string.Empty;
             con = new SqlConnection(str);
             query = @"SELECT 
-              ROW_NUMBER() OVER (ORDER BY UserID) AS [S.No], 
-              UserID, 
-              Name, 
-              Email, 
-              PhoneNumber
-           FROM 
-              [User];"; cmd = new SqlCommand(query, con);
+                     ROW_NUMBER() OVER (ORDER BY UserID) AS [S.No], 
+                     UserID, 
+                     Name, 
+                     Email, 
+                     PhoneNumber,
+                     City
+                     FROM 
+                     [User];";
+            cmd = new SqlCommand(query, con);
             SqlDataAdapter sda = new SqlDataAdapter(cmd);
             dt = new DataTable();
             sda.Fill(dt);

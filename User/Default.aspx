@@ -153,7 +153,7 @@
                 <div class="row">
                     <div class="col-lg-12">
                         <div class="browse-btn2 text-center mt-50">
-                            <a href="job_listing.html" class="border-btn2">Browse All Sectors</a>
+                            <a href="Default.aspx" class="border-btn2">Browse All Sectors</a>
                         </div>
                     </div>
                 </div>
@@ -168,7 +168,7 @@
                         <div class="cv-caption text-center">
                             <p class="pera1">FEATURED TOURS Packages</p>
                             <p class="pera2"> Make a Difference with Your Online Resume!</p>
-                            <a href="#" class="border-btn2 border-btn4">Upload your cv</a>
+                            <a href="JobListing.aspx" class="border-btn2 border-btn4">Upload your cv</a>
                         </div>
                     </div>
                 </div>
@@ -176,7 +176,7 @@
         </div>
         <!-- Online CV Area End-->
         <!-- Featured_job_start -->
-        <section class="featured-job-area feature-padding">
+<%--        <section class="featured-job-area feature-padding">
             <div class="container">
                 <!-- Section Tittle -->
                 <div class="row">
@@ -272,7 +272,7 @@
                     </div>
                 </div>
             </div>
-        </section>
+        </section>--%>
         <!-- Featured_job_end -->
         <!-- How  Apply Process Start-->
         <div class="apply-process-area apply-bg pt-150 pb-150" data-background="../assets/img/gallery/how-applybg.png">
@@ -403,7 +403,7 @@
                             <div class="support-caption">
                                 <p class="pera-top">Mollit anim laborum duis au dolor in voluptate velit ess cillum dolore eu lore dsu quality mollit anim laborumuis au dolor in voluptate velit cillum.</p>
                                 <p>Mollit anim laborum.Duis aute irufg dhjkolohr in re voluptate velit esscillumlore eu quife nrulla parihatur. Excghcepteur signjnt occa cupidatat non inulpadeserunt mollit aboru. temnthp incididbnt ut labore mollit anim laborum suis aute.</p>
-                                <a href="about.html" class="btn post-btn">Post a job</a>
+                                <a href="Hiring.aspx" class="btn post-btn">Post a job</a>
                             </div>
                         </div>
                     </div>
