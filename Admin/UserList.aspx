@@ -28,7 +28,7 @@
                             <asp:BoundField DataField="Email" HeaderText="Email">
                                 <ItemStyle HorizontalAlign="Center" />
                             </asp:BoundField>
-                            <asp:BoundField DataField="Phone Number" HeaderText="Subject">
+                            <asp:BoundField DataField="PhoneNumber" HeaderText="Subject">
                                 <ItemStyle HorizontalAlign="Center" />
                             </asp:BoundField>
                             <asp:BoundField DataField="City" HeaderText="Message">

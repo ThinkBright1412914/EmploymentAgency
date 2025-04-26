@@ -6,6 +6,7 @@ using System.Drawing;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using EmploymentAgency.Helper;
 
 namespace EmploymentAgency.User
 {
@@ -78,10 +79,25 @@ namespace EmploymentAgency.User
                         cmd.Parameters.AddWithValue("@JobID", Request.QueryString["id"]);
                         cmd.Parameters.AddWithValue("@UserID", Session["userid"]);
                         con.Open();
-                        int r = cmd.ExecuteNonQuery();
                         lblMsg.Visible = true;
-                        lblMsg.Text = r > 0 ? "Job Applied Successfully" : "Cannot apply for the job. Please try again later.";
-                        lblMsg.CssClass = r > 0 ? "alert alert-success" : "alert alert-danger";
+                        int r = cmd.ExecuteNonQuery();
+                        if (r > 0)
+                        {
+                            lblMsg.Text = "Job Applied Successfully.";
+                            lblMsg.CssClass = "alert alert-success";
+                            string email = Session["email"].ToString();
+                            string name = Session["user"].ToString();
+                            EmailService.SendEmail(
+                                email,
+                                "Job Confirmation",
+                                $"Dear {name},<br><br>You have successfully applied for the job.<br><br>Best regards,<br>Job Finder."
+                            );
+                        }
+                        else
+                        {
+                            lblMsg.Text = "Cannot apply for the job. Please try again later.";
+                            lblMsg.CssClass = "alert alert-danger";
+                        }
                     }
                     catch (Exception ex)
                     {

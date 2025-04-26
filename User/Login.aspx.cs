@@ -52,6 +52,7 @@ namespace EmploymentAgency.User
                     {
                         Session["user"] = sdr["Username"].ToString();
                         Session["userid"] = sdr["UserId"].ToString();
+                        Session["email"] = sdr["Email"].ToString();
                         Response.Redirect("Default.aspx", false);
                     }
                     else

@@ -31,7 +31,15 @@ namespace EmploymentAgency.Admin
         {
             string query = string.Empty;
             con = new SqlConnection(str);
-            query = @"Select Row_Number() over(Order by (Select 1) as [S.No], UserID, Name, Email, PhoneNumber, from Users";
+            query = @"SELECT 
+                     ROW_NUMBER() OVER (ORDER BY UserID) AS [S.No], 
+                     UserID, 
+                     Name, 
+                     Email, 
+                     PhoneNumber,
+                     City
+                     FROM 
+                     [User];";
             cmd = new SqlCommand(query, con);
             SqlDataAdapter sda = new SqlDataAdapter(cmd);
             dt = new DataTable();
@@ -52,7 +60,7 @@ namespace EmploymentAgency.Admin
                 GridViewRow row = GridView1.Rows[e.RowIndex];
                 int usertId = Convert.ToInt32(GridView1.DataKeys[e.RowIndex].Values[0]);
                 con = new SqlConnection(str);
-                cmd = new SqlCommand("Delete from [Users] where UserID=@id", con);
+                cmd = new SqlCommand("Delete from [User] where UserID=@id", con);
                 cmd.Parameters.AddWithValue("@id", usertId);
                 con.Open();
                 int result = cmd.ExecuteNonQuery();

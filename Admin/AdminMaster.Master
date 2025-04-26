@@ -98,6 +98,12 @@
                                 <div class="title">User List</div>
                             </a>
                         </li>
+                           <li>
+                           <a href="HiringOrganizationList.aspx">
+                               <div class="icon"><i class="fas fa-user-check"></i></div>
+                               <div class="title"> Organizaton List</div>
+                           </a>
+                       </li>
                     </ul>
                     <div class="logout_btn">
                         <asp:LinkButton ID="btnLogOut" runat="server" CauseValidation="false" OnClick="btnLogOut_Click">Logout</asp:LinkButton>

@@ -66,6 +66,7 @@
   <ItemGroup>
     <Content Include="Admin\ContactList.aspx" />
     <Content Include="Admin\Dashboard.aspx" />
+    <Content Include="Admin\HiringOrganizationList.aspx" />
     <Content Include="Admin\JobList.aspx" />
     <Content Include="Admin\NewJob.aspx" />
     <Content Include="Admin\UserList.aspx" />
@@ -225,6 +226,7 @@
     <Content Include="User\About.aspx" />
     <Content Include="User\Contact.aspx" />
     <Content Include="User\Default.aspx" />
+    <Content Include="User\Hiring.aspx" />
     <Content Include="User\JobDetails.aspx" />
     <Content Include="User\JobListing.aspx" />
     <Content Include="User\Login.aspx" />
@@ -254,6 +256,13 @@
     </Compile>
     <Compile Include="Admin\Dashboard.aspx.designer.cs">
       <DependentUpon>Dashboard.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Admin\HiringOrganizationList.aspx.cs">
+      <DependentUpon>HiringOrganizationList.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admin\HiringOrganizationList.aspx.designer.cs">
+      <DependentUpon>HiringOrganizationList.aspx</DependentUpon>
     </Compile>
     <Compile Include="Admin\JobList.aspx.cs">
       <DependentUpon>JobList.aspx</DependentUpon>
@@ -286,6 +295,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Helper\EmailService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="User\About.aspx.cs">
       <DependentUpon>About.aspx</DependentUpon>
@@ -307,6 +317,13 @@
     </Compile>
     <Compile Include="User\Default.aspx.designer.cs">
       <DependentUpon>Default.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="User\Hiring.aspx.cs">
+      <DependentUpon>Hiring.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="User\Hiring.aspx.designer.cs">
+      <DependentUpon>Hiring.aspx</DependentUpon>
     </Compile>
     <Compile Include="User\JobDetails.aspx.cs">
       <DependentUpon>JobDetails.aspx</DependentUpon>
