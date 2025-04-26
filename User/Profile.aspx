@@ -14,14 +14,20 @@
                             <div class="card">
                                 <div class="card-body">
                                     <div class="d-flex flex-column align-items-center text-center">
-                                        <img src="../assets/img/profile/hero.png" alt="UserPic" class="rounded-circle" width="150" />
+                                        <!-- Image dynamically bound to Base64 string -->
+                                        <img id="userImage" src="data:image/png;base64,<%# Eval("Image") %>" alt="UserPic" class="rounded-circle" width="150" />
+
                                         <div class="mt-3">
                                             <h4 class="text-capitalize"><%# Eval("Name") %></h4>
                                             <p class="text-secondary mb-1"><%# Eval("Username") %></p>
                                             <p class="text-muted font-size-sm text-capitalize">
-                                                <i class="fas fa-map-marker-alt"></i> <%# Eval("City") %>
+                                                <i class="fas fa-map-marker-alt"></i><%# Eval("City") %>
                                             </p>
                                         </div>
+
+                                        <!-- File input to change image -->
+                                        <asp:FileUpload ID="fileUpload" runat="server" CssClass="form-control" />
+                                        <asp:Button ID="btnUpdateImage" runat="server" Text="Update Image" OnClick="btnUpdateImage_Click" CssClass="btn btn-primary mt-3" />
                                     </div>
                                 </div>
                             </div>

@@ -25,8 +25,21 @@ namespace EmploymentAgency.User
         {
             try
             {
+                string userImg = string.Empty;
                 con = new SqlConnection(str);
-                string query = @"Insert into [User] (Username, Password, Name, Address, Email, PhoneNumber, City ) Values(CONVERT(varbinary, @Username),CONVERT(varbinary, @Password),CONVERT(varbinary, @Name),CONVERT(varbinary, @Address),CONVERT(varbinary, @Email), CONVERT(varbinary, @PhoneNumber),CONVERT(varbinary, @City) )";
+
+                if (img.HasFile)
+                {
+                    using (System.IO.BinaryReader br = new System.IO.BinaryReader(img.PostedFile.InputStream))
+                    {
+                        byte[] bytes = br.ReadBytes(img.PostedFile.ContentLength);
+                        userImg = Convert.ToBase64String(bytes);
+                    }
+                }
+
+                string query = @"INSERT INTO [User] (Username, Password, Name, Address, Email, PhoneNumber, City , Image) 
+                 VALUES (@Username, @Password, @Name, @Address, @Email, @PhoneNumber, @City , @Image)";
+
                 cmd = new SqlCommand(query, con);
                 cmd.Parameters.AddWithValue("@Username", txtUsername.Text.Trim());
                 cmd.Parameters.AddWithValue("@Password", txtPassword.Text.Trim());
@@ -35,8 +48,11 @@ namespace EmploymentAgency.User
                 cmd.Parameters.AddWithValue("@Email", txtEmail.Text.Trim());
                 cmd.Parameters.AddWithValue("@PhoneNumber", txtPhoneNumber.Text.Trim());
                 cmd.Parameters.AddWithValue("@City", ddlCity.SelectedValue);
+                cmd.Parameters.AddWithValue("@Image", userImg);
+
                 con.Open();
                 int r = cmd.ExecuteNonQuery();
+
                 if (r > 0)
                 {
                     lblMessage.Visible = true;
@@ -51,12 +67,12 @@ namespace EmploymentAgency.User
                     lblMessage.CssClass = "alert alert-danger";
                 }
             }
-            catch(SqlException ex)
+            catch (SqlException ex)
             {
-                if(ex.Message.Contains("Voilation of UNIQUE KEY constraint"))
+                if (ex.Message.Contains("Voilation of UNIQUE KEY constraint"))
                 {
                     lblMessage.Visible = true;
-                    lblMessage.Text = "<b>"+ txtUsername.Text.Trim() + "</b>Username already exists!, try new one...!";
+                    lblMessage.Text = "<b>" + txtUsername.Text.Trim() + "</b>Username already exists!, try new one...!";
                     lblMessage.CssClass = "alert alert-danger";
                 }
                 else

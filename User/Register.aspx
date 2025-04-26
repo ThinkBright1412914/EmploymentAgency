@@ -71,6 +71,18 @@
 
                             <div class="col-12">
                                 <div class="form-group">
+                                    <label>Upload Profile Picture</label>
+                                    <asp:FileUpload ID="img" runat="server" CssClass="form-control-file" />
+                                    <asp:RequiredFieldValidator ID="RequiredFieldValidatorImage" runat="server"
+                                        ControlToValidate="img"
+                                        ErrorMessage="Please upload a profile picture."
+                                        ForeColor="Red" Display="Dynamic" Font-Size="Small"
+                                        InitialValue="" />
+                                </div>
+                            </div>
+
+                            <div class="col-12">
+                                <div class="form-group">
                                     <label>Email</label>
                                     <asp:TextBox ID="txtEmail" runat="server" CssClass="form-control w-100" placeholder="Enter Full Name" required TextMode="Email"></asp:TextBox>
                                 </div>
@@ -83,7 +95,7 @@
                                         AppendDataBoundItems="true" DataTextField="CityName" DataValueField="CityName">
                                         <asp:ListItem Value="0">Select City</asp:ListItem>
                                     </asp:DropDownList>
-                                    <asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server" ErrorMessage="City is required" ForeColor="Red" Display="Dynamic" Font-Size="Small" InitialValue="0" ControlToValidate ="ddlCity"></asp:RequiredFieldValidator>
+                                    <asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server" ErrorMessage="City is required" ForeColor="Red" Display="Dynamic" Font-Size="Small" InitialValue="0" ControlToValidate="ddlCity"></asp:RequiredFieldValidator>
                                     <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:EmploymentAgencyConnectionString %>" ProviderName="<%$ ConnectionStrings:EmploymentAgencyConnectionString.ProviderName %>" SelectCommand="SELECT [CityName] FROM [City]"></asp:SqlDataSource>
                                 </div>
                             </div>
@@ -92,7 +104,7 @@
 
                         <div class="form-group mt-3">
                             <asp:Button ID="btnRegister" runat="server" Text="Register" CssClass="button button-contactForm boxed-btn mr-4" OnClick="btnRegister_Click" />
-                            <span class ="clickLink"><a href ="../User/Login.aspx">Already Register? Click Here...</a></span>
+                            <span class="clickLink"><a href="../User/Login.aspx">Already Register? Click Here...</a></span>
                         </div>
 
                     </div>

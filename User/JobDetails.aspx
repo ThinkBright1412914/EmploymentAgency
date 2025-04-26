@@ -109,10 +109,8 @@
                                         <li>Last date : <span><%# Container.DataItem != null && DataBinder.Eval(Container.DataItem, "LastDateToApply") != DBNull.Value ? string.Format("{0:dd MMMM yyyy}", DataBinder.Eval(Container.DataItem, "LastDateToApply")) : "N/A" %></span></li>
                                     </ul>
                                     <div class="apply-btn2">
-                                        <%--<a href="#" class="btn">Apply Now</a>--%>
                                         <asp:HiddenField ID="hfJobID" runat="server" Value='<%# Eval("JobID") %>' />
                                         <asp:LinkButton ID="lbApplyJob" runat="server" CssClass="btn" Text="Apply Now" CommandName="ApplyJob"></asp:LinkButton>
-
                                     </div>
                                 </div>
                                 <div class="post-details4  mb-50">

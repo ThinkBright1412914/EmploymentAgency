@@ -32,7 +32,7 @@ namespace EmploymentAgency.User
         private void ShowProfile()
         {
             con = new SqlConnection(str);   
-            string query = "SELECT UserID, Username, CAST(Name AS NVARCHAR(MAX)) AS Name, Email, Address, PhoneNumber, City, Resume FROM [User] WHERE Username=@username";
+            string query = "SELECT UserID, Username, CAST(Name AS NVARCHAR(MAX)) AS Name, Email, Address, PhoneNumber, City, Resume , Image FROM [User] WHERE Username=@username";
             cmd = new SqlCommand(query, con);
             cmd.Parameters.AddWithValue("@username", Session["user"]);
             sda = new SqlDataAdapter(cmd);
@@ -57,5 +57,38 @@ namespace EmploymentAgency.User
                 Response.Redirect("ResumeBuild.aspx?id=" + e.CommandArgument.ToString());
             }
         }
+
+        protected void btnUpdateImage_Click(object sender, EventArgs e)
+        {
+            DataListItem item = ((Button)sender).NamingContainer as DataListItem;
+            FileUpload fileUpload = (FileUpload)item.FindControl("fileUpload");
+
+            if (fileUpload.HasFile)
+            {
+                byte[] imageBytes = fileUpload.FileBytes;
+                string base64String = Convert.ToBase64String(imageBytes);
+                UpdateUserImage( base64String);
+
+                Response.Redirect(Request.Url.ToString()); 
+            }
+            else
+            {
+                Response.Write("<script>alert('Please select an image to upload.');</script>");
+            }
+        }
+
+        private void UpdateUserImage(string base64String)
+        {
+            con = new SqlConnection(str);
+            string query = @"UPDATE [User] SET Image = @Image WHERE UserID = @UserID";
+            cmd = new SqlCommand(query, con);
+            cmd.Parameters.AddWithValue("@Image", base64String);
+            cmd.Parameters.AddWithValue("@UserID", Session["userID"]);
+
+            con.Open();
+            cmd.ExecuteNonQuery();
+            con.Close();
+        }
+
     }
 }

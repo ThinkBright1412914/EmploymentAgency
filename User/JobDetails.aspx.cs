@@ -2,8 +2,6 @@
 using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
-using System.Drawing;
-using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using EmploymentAgency.Helper;
@@ -12,10 +10,6 @@ namespace EmploymentAgency.User
 {
     public partial class JobDetails : System.Web.UI.Page
     {
-        SqlConnection con;
-        SqlCommand cmd;
-        SqlDataAdapter sda;
-        DataTable dt, dt1;
         string str = ConfigurationManager.ConnectionStrings["EmploymentAgencyConnectionString"].ConnectionString;
         public string jobTitle = string.Empty;
 
@@ -33,30 +27,33 @@ namespace EmploymentAgency.User
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            // Ensure no redundant logic is executed here
+            // No extra code needed here
         }
 
         private void showJobDetails()
         {
             try
             {
-                con = new SqlConnection(str);
-                string query = @"SELECT * FROM Jobs WHERE JobID = @id";
-                cmd = new SqlCommand(query, con);
-                cmd.Parameters.AddWithValue("@id", Request.QueryString["id"]);
-                sda = new SqlDataAdapter(cmd);
-                dt = new DataTable();
-                sda.Fill(dt);
+                using (SqlConnection con = new SqlConnection(str))
+                {
+                    string query = @"SELECT * FROM Jobs WHERE JobID = @id";
+                    SqlCommand cmd = new SqlCommand(query, con);
+                    cmd.Parameters.AddWithValue("@id", Request.QueryString["id"]);
 
-                if (dt.Rows.Count > 0)
-                {
-                    DataList1.DataSource = dt;
-                    DataList1.DataBind();
-                    jobTitle = dt.Rows[0]["Title"].ToString();
-                }
-                else
-                {
-                    Response.Redirect("JobListing.aspx");
+                    SqlDataAdapter sda = new SqlDataAdapter(cmd);
+                    DataTable dt = new DataTable();
+                    sda.Fill(dt);
+
+                    if (dt.Rows.Count > 0)
+                    {
+                        DataList1.DataSource = dt;
+                        DataList1.DataBind();
+                        jobTitle = dt.Rows[0]["Title"].ToString();
+                    }
+                    else
+                    {
+                        Response.Redirect("JobListing.aspx");
+                    }
                 }
             }
             catch (Exception ex)
@@ -71,41 +68,47 @@ namespace EmploymentAgency.User
             {
                 if (Session["user"] != null)
                 {
-                    try
+                    HiddenField hfJobID = e.Item.FindControl("hfJobID") as HiddenField;
+                    if (hfJobID != null)
                     {
-                        con = new SqlConnection(str);
-                        string query = @"INSERT INTO AppliedJobs (JobID, UserID) VALUES (@JobID, @UserID)";
-                        cmd = new SqlCommand(query, con);
-                        cmd.Parameters.AddWithValue("@JobID", Request.QueryString["id"]);
-                        cmd.Parameters.AddWithValue("@UserID", Session["userid"]);
-                        con.Open();
-                        lblMsg.Visible = true;
-                        int r = cmd.ExecuteNonQuery();
-                        if (r > 0)
+                        try
                         {
-                            lblMsg.Text = "Job Applied Successfully.";
-                            lblMsg.CssClass = "alert alert-success";
-                            string email = Session["email"].ToString();
-                            string name = Session["user"].ToString();
-                            EmailService.SendEmail(
-                                email,
-                                "Job Confirmation",
-                                $"Dear {name},<br><br>You have successfully applied for the job.<br><br>Best regards,<br>Job Finder."
-                            );
+                            using (SqlConnection con = new SqlConnection(str))
+                            {
+                                string query = @"INSERT INTO AppliedJobs (JobID, UserID) VALUES (@JobID, @UserID)";
+                                SqlCommand cmd = new SqlCommand(query, con);
+                                cmd.Parameters.AddWithValue("@JobID", hfJobID.Value);
+                                cmd.Parameters.AddWithValue("@UserID", Session["userId"]); // fixed spelling
+
+                                con.Open();
+                                int r = cmd.ExecuteNonQuery();
+                                if (r > 0)
+                                {
+                                    lblMsg.Visible = true;
+                                    lblMsg.Text = "Job Applied Successfully.";
+                                    lblMsg.CssClass = "alert alert-success";
+
+                                    string email = Session["email"].ToString();
+                                    string name = Session["user"].ToString();
+                                    EmailService.SendEmail(
+                                        email,
+                                        "Job Confirmation",
+                                        $"Dear {name},<br><br>You have successfully applied for the job.<br><br>Best regards,<br>Job Finder."
+                                    );
+                                    DataList1.DataBind(); // Refresh to disable button after applying
+                                }
+                                else
+                                {
+                                    lblMsg.Visible = true;
+                                    lblMsg.Text = "Cannot apply for the job. Please try again later.";
+                                    lblMsg.CssClass = "alert alert-danger";
+                                }
+                            }
                         }
-                        else
+                        catch (Exception ex)
                         {
-                            lblMsg.Text = "Cannot apply for the job. Please try again later.";
-                            lblMsg.CssClass = "alert alert-danger";
+                            Response.Write("<script>alert('Error: " + ex.Message + "');</script>");
                         }
-                    }
-                    catch (Exception ex)
-                    {
-                        Response.Write("<script>alert('Error: " + ex.Message + "');</script>");
-                    }
-                    finally
-                    {
-                        con.Close();
                     }
                 }
                 else
@@ -117,50 +120,52 @@ namespace EmploymentAgency.User
 
         protected void DataList1_ItemDataBound(object sender, DataListItemEventArgs e)
         {
-            if (Session["user"] != null)
+            if (e.Item.ItemType == ListItemType.Item || e.Item.ItemType == ListItemType.AlternatingItem)
             {
-                LinkButton btnApplyJob = e.Item.FindControl("lbApplyJob") as LinkButton;
-                if (btnApplyJob != null) // Ensure the control exists
+                if (Session["user"] != null)
                 {
-                    if (isApplied())
+                    LinkButton btnApplyJob = e.Item.FindControl("lbApplyJob") as LinkButton;
+                    HiddenField hfJobID = e.Item.FindControl("hfJobID") as HiddenField;
+
+                    if (btnApplyJob != null && hfJobID != null)
                     {
-                        btnApplyJob.Enabled = false;
-                        btnApplyJob.Text = "Applied";
-                    }
-                    else
-                    {
-                        btnApplyJob.Enabled = true;
-                        btnApplyJob.Text = "Apply Now";
+                        string jobId = hfJobID.Value;
+
+                        if (isApplied(jobId))
+                        {
+                            btnApplyJob.Enabled = false;
+                            btnApplyJob.Text = "Applied";
+                            btnApplyJob.CssClass = "btn disabled"; // Optional: Make it greyed out
+                        }
+                        else
+                        {
+                            btnApplyJob.Enabled = true;
+                            btnApplyJob.Text = "Apply Now";
+                        }
                     }
                 }
             }
         }
 
-        bool isApplied()// Add any additional logic for data binding here if needed
+        private bool isApplied(string jobId)
         {
-            con = new SqlConnection(str);
-            string query = @"SELECT * FROM AppliedJobs WHERE  UserId = @UserId and JobID = @JobID";
-            cmd = new SqlCommand(query, con);
-            cmd.Parameters.AddWithValue("@UserId", Session["userId"]);
-            cmd.Parameters.AddWithValue("@JobID", Request.QueryString["id"]);
-            sda = new SqlDataAdapter(cmd);
-            dt1 = new DataTable();
-            sda.Fill(dt1);
-            if (dt1.Rows.Count == 1)
+            using (SqlConnection con = new SqlConnection(str))
             {
-                return true;
-            }
-            else
-            {
-                return false;
+                string query = @"SELECT COUNT(*) FROM AppliedJobs WHERE UserId = @UserId AND JobID = @JobID";
+                SqlCommand cmd = new SqlCommand(query, con);
+                cmd.Parameters.AddWithValue("@UserId", Session["userId"]);
+                cmd.Parameters.AddWithValue("@JobID", jobId);
+
+                con.Open();
+                int count = Convert.ToInt32(cmd.ExecuteScalar());
+                return count > 0;
             }
         }
+
         protected string GetImageUrl(object url)
         {
             if (url == null || string.IsNullOrEmpty(url.ToString()) || url == DBNull.Value)
             {
-                // Log the issue (optional)
-                System.Diagnostics.Debug.WriteLine("CompanyImage is null or empty.");
                 return ResolveUrl("~/Images/No_Image.png");
             }
             return ResolveUrl($"~/Admin/{url.ToString()}");
