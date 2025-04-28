@@ -58,6 +58,7 @@ namespace EmploymentAgency.User
                     lblMessage.Visible = true;
                     lblMessage.Text = "Registered Successfully!";
                     lblMessage.CssClass = "alert alert-success";
+                    Response.Redirect("Login.aspx?msg=success", false);
                     CLear();
                 }
                 else

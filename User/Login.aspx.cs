@@ -18,8 +18,16 @@ namespace EmploymentAgency.User
         string username, password = string.Empty;
         protected void Page_Load(object sender, EventArgs e)
 		{
-
-		}
+            if (!IsPostBack)
+            {
+                if (Request.QueryString["msg"] == "success")
+                {
+                    lblMessage.Visible = true;
+                    lblMessage.Text = "Registered Successfully!";
+                    lblMessage.CssClass = "alert alert-success";
+                }
+            }
+        }
 
         protected void btnLogin_Click(object sender, EventArgs e)
         {

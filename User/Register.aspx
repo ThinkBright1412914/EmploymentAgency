@@ -73,13 +73,9 @@
                                 <div class="form-group">
                                     <label>Upload Profile Picture</label>
                                     <asp:FileUpload ID="img" runat="server" CssClass="form-control-file" />
-                                    <asp:RequiredFieldValidator ID="RequiredFieldValidatorImage" runat="server"
-                                        ControlToValidate="img"
-                                        ErrorMessage="Please upload a profile picture."
-                                        ForeColor="Red" Display="Dynamic" Font-Size="Small"
-                                        InitialValue="" />
                                 </div>
                             </div>
+
 
                             <div class="col-12">
                                 <div class="form-group">

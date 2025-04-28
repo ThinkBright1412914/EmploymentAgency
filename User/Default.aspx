@@ -8,7 +8,7 @@
         <div class="slider-area ">
             <!-- Mobile Menu -->
             <div class="slider-active">
-                <div class="single-slider slider-height d-flex align-items-center" data-background="../assets/img/hero/h1_hero.jpg">
+                <div class="single-slider slider-height d-flex align-items-center" data-background="../assets/img/hero/Banner_New.jpg">
                     <div class="container">
                         <div class="row">
                             <div class="col-xl-6 col-lg-9 col-md-10">
@@ -339,7 +339,7 @@
                                     <!-- founder -->
                                     <div class="testimonial-founder  ">
                                         <div class="founder-img mb-30">
-                                            <img src="../assets/img/testmonial/testimonial-founder.png" alt="">
+                                            <img src="../assets/img/testmonial/new-testimonial.png" alt="">
                                             <span>Margaret Lawson</span>
                                             <p>Creative Director</p>
                                         </div>
@@ -356,7 +356,7 @@
                                     <!-- founder -->
                                     <div class="testimonial-founder  ">
                                         <div class="founder-img mb-30">
-                                            <img src="../assets/img/testmonial/testimonial-founder.png" alt="">
+                                            <img src="../assets/img/testmonial/new-testimonial.png" alt="">
                                             <span>Margaret Lawson</span>
                                             <p>Creative Director</p>
                                         </div>
@@ -373,7 +373,7 @@
                                     <!-- founder -->
                                     <div class="testimonial-founder  ">
                                         <div class="founder-img mb-30">
-                                            <img src="../assets/img/testmonial/testimonial-founder.png" alt="">
+                                            <img src="../assets/img/testmonial/new-testimonial.png" alt="">
                                             <span>Margaret Lawson</span>
                                             <p>Creative Director</p>
                                         </div>
@@ -409,7 +409,7 @@
                     </div>
                     <div class="col-xl-6 col-lg-6">
                         <div class="support-location-img">
-                            <img src="../assets/img/service/support-img.jpg" alt="">
+                            <img src="../assets/img/service/new-support.jpg" alt="">
                             <div class="support-img-cap text-center">
                                 <p>Since</p>
                                 <span>1994</span>
