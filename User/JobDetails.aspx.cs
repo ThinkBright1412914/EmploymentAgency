@@ -75,12 +75,24 @@ namespace EmploymentAgency.User
                         {
                             using (SqlConnection con = new SqlConnection(str))
                             {
+                                con.Open();
+                                SqlCommand checkCmd = new SqlCommand("SELECT Resume FROM [User] WHERE UserID = @UserID", con);
+                                checkCmd.Parameters.AddWithValue("@UserID", Session["userId"]);
+                                object resumeResult = checkCmd.ExecuteScalar();
+
+                                if (resumeResult == null || string.IsNullOrEmpty(resumeResult.ToString()))
+                                {
+                                    lblMsg.Visible = true;
+                                    lblMsg.Text = "Please upload your resume in your profile before applying for a job.";
+                                    lblMsg.CssClass = "alert alert-warning";
+                                    return;
+                                }
+
                                 string query = @"INSERT INTO AppliedJobs (JobID, UserID) VALUES (@JobID, @UserID)";
                                 SqlCommand cmd = new SqlCommand(query, con);
                                 cmd.Parameters.AddWithValue("@JobID", hfJobID.Value);
-                                cmd.Parameters.AddWithValue("@UserID", Session["userId"]); // fixed spelling
+                                cmd.Parameters.AddWithValue("@UserID", Session["userId"]);
 
-                                con.Open();
                                 int r = cmd.ExecuteNonQuery();
                                 if (r > 0)
                                 {
@@ -95,7 +107,8 @@ namespace EmploymentAgency.User
                                         "Job Confirmation",
                                         $"Dear {name},<br><br>You have successfully applied for the job.<br><br>Best regards,<br>Job Finder."
                                     );
-                                    DataList1.DataBind(); // Refresh to disable button after applying
+
+                                    DataList1.DataBind(); 
                                 }
                                 else
                                 {
@@ -117,6 +130,7 @@ namespace EmploymentAgency.User
                 }
             }
         }
+
 
         protected void DataList1_ItemDataBound(object sender, DataListItemEventArgs e)
         {

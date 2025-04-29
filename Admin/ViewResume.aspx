@@ -16,7 +16,7 @@
                     <asp:GridView ID="GridView1" runat="server" CssClass="table table-hover table-bordered"
                         EmptyDataText="No Record to Display...!" AutoGenerateColumns="False" AllowPaging="True" PageSize="10"
                         OnPageIndexChanging="GridView1_PageIndexChanging" DataKeyNames="AppliedJobId" OnRowDeleting="GridView1_RowDeleting"
-                        OnRowDataBound ="GridView1_RowDataBound" OnSelectedIndexChanged ="GridView1_SelectedIndexChanged">
+                        OnRowDataBound="GridView1_RowDataBound" OnSelectedIndexChanged="GridView1_SelectedIndexChanged">
 
                         <Columns>
 
@@ -46,10 +46,13 @@
 
                             <asp:TemplateField HeaderText="Resume">
                                 <ItemTemplate>
-                                    <asp:HyperLink ID="HyperLink1" runat="server" NavigateUrl='<%# string.Format("../{0}", Eval("Resume")) %>'>
-                                        <i class="fas fa-download"></i>Download
+                                    <asp:HyperLink ID="HyperLink1" runat="server"
+                                        NavigateUrl='<%# ResolveUrl("~/" + Eval("Resume")) %>'
+                                        Target="_blank">
+                                        <i class="fas fa-download"></i> Download
                                     </asp:HyperLink>
-                                    <asp:HiddenField ID="hdnJobId" runat="server" Value ='<%# Eval("JobId") %>' Visible ="false"/>
+
+                                    <asp:HiddenField ID="hdnJobId" runat="server" Value='<%# Eval("JobId") %>' Visible="false" />
                                 </ItemTemplate>
                                 <ItemStyle HorizontalAlign="Center" />
                             </asp:TemplateField>
@@ -61,8 +64,6 @@
                         </Columns>
                         <HeaderStyle BackColor="#7200cf" ForeColor="White" />
                     </asp:GridView>
-
-
                 </div>
             </div>
         </div>

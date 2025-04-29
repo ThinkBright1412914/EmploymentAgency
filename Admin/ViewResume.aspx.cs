@@ -88,8 +88,24 @@ namespace EmploymentAgency.Admin
 
         protected void GridView1_RowDataBound(object sender, GridViewRowEventArgs e)
         {
-            e.Row.Attributes["onclick"] = Page.ClientScript.GetPostBackClientHyperlink(GridView1, "Select$" + e.Row.RowIndex);
-            e.Row.ToolTip = "Click to view job details";
+            if (e.Row.RowType == DataControlRowType.DataRow && e.Row.RowState != DataControlRowState.Edit)
+            {
+ 
+                e.Row.Attributes["onclick"] = Page.ClientScript.GetPostBackClientHyperlink(GridView1, "Select$" + e.Row.RowIndex);
+                e.Row.ToolTip = "Click to view job details";
+
+                foreach (TableCell cell in e.Row.Cells)
+                {
+                    foreach (Control ctrl in cell.Controls)
+                    {
+                        if (ctrl is IButtonControl)
+                        {
+                            e.Row.Attributes["onclick"] = null;
+                            e.Row.ToolTip = null;
+                        }
+                    }
+                }
+            }
         }
 
         protected void GridView1_SelectedIndexChanged(object sender, EventArgs e)
